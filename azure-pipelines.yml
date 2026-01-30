@@ -1,0 +1,38 @@
+name: rg pipeline
+trigger:none
+
+pool:Final_Pool
+
+jobs:
+- job: terraforminstall
+  displayName: job-1 terraform install
+  steps:
+  - task: TerraformInstaller@1
+    inputs:
+      terraformVersion: 'latest'
+jobs:
+- job: terraforminstall
+  displayName: job-2 terraform process
+  steps:
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/'
+      backendServiceArm: 'Finalsvc'
+      backendAzureRmStorageAccountName: 'patelstg'
+      backendAzureRmContainerName: 'patelcont'
+      backendAzureRmKey: 'terraform-tfstate'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'plan'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/'
+      environmentServiceNameAzureRM: 'Finalsvc'
+
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'apply'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/'
+      environmentServiceNameAzureRM: 'Finalsvc'
