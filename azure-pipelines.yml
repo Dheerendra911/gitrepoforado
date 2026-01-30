@@ -1,7 +1,7 @@
 name: rg pipeline
-trigger:none
-
-pool:Final_Pool
+trigger: none
+pool:
+ name: Final_Pool
 
 jobs:
 - job: terraforminstall
@@ -10,8 +10,7 @@ jobs:
   - task: TerraformInstaller@1
     inputs:
       terraformVersion: 'latest'
-jobs:
-- job: terraforminstall
+- job: terraformprocess
   displayName: job-2 terraform process
   steps:
   - task: TerraformTask@5
