@@ -3,3 +3,8 @@ resource "azurerm_resource_group" "dhee" {
     location = "central india"
   
 }
+resource "azurerm_resource_group" "dheeru" {
+    name = "rg-amitji"
+    location = "central india"
+  
+}
